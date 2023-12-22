@@ -2,10 +2,10 @@ import numpy as np
 from tensorflow import keras
 from tqdm import tqdm
 
-from helpers import analyze
-from helpers import make_data
-from helpers import score_iou
-from train import normalization
+from src.helpers import analyze
+from src.helpers import make_data
+from src.helpers import score_iou
+from src.train import normalization
 
 
 def post_processing(predictions: np.array) -> np.array:
@@ -62,7 +62,6 @@ def post_processing(predictions: np.array) -> np.array:
 
 
 def eval():
-
     # load the proper models for this evaluation
     model = keras.models.load_model("save/best_combined_model")
 

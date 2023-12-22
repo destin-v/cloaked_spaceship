@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from skimage.draw import line
 
-from helpers import _make_box_pts
-from helpers import make_data
+from src.helpers import _make_box_pts
+from src.helpers import make_data
 
 
 fig, ax = plt.subplots(1, 3, figsize=(12, 4))

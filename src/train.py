@@ -19,12 +19,12 @@ from tensorflow.keras.layers import MaxPool2D
 from tensorflow.keras.layers import Reshape
 from tensorflow.keras.models import load_model
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import Model
 
-from helpers import make_data
+from src.helpers import make_data
 
 
 def replace_inputs(inputs, model):
-
     unique_name = names.get_first_name()
 
     for ii in range(0, len(model.layers), 1):
@@ -39,7 +39,7 @@ def replace_inputs(inputs, model):
     return x
 
 
-def combine_models():
+def combine_models() -> Model:
     """Generate a combined model."""
 
     IMAGE_SIZE = 200
@@ -75,7 +75,7 @@ def combine_models():
     return model
 
 
-def gen_base_model():
+def gen_base_model() -> Model:
     """Standard network model.
 
     This model will work well for the problem of image detection and estimation.
@@ -104,9 +104,7 @@ def gen_base_model():
     }
 
     model = Sequential()
-    model.add(
-        Reshape((IMAGE_SIZE, IMAGE_SIZE, 1), input_shape=(IMAGE_SIZE, IMAGE_SIZE))
-    )
+    model.add(Reshape((IMAGE_SIZE, IMAGE_SIZE, 1), input_shape=(IMAGE_SIZE, IMAGE_SIZE)))
 
     for i in [2, 2, 4, 4, 6, 6, 8, 8]:
         model.add(Conv2D(NFILTERS * i, **CONV_PARAMS_1))
@@ -125,7 +123,7 @@ def gen_base_model():
     return model
 
 
-def gen_position():
+def gen_position() -> Model:
     """Transfer learning model.
 
     This model utilizes transfer learning to accelerate its progress.
@@ -156,7 +154,7 @@ def gen_position():
     return model
 
 
-def gen_area():
+def gen_area() -> Model:
     """Transfer learning model.
 
     This model utilizes transfer learning to accelerate its progress.
@@ -184,7 +182,7 @@ def gen_area():
     return model
 
 
-def gen_detect():
+def gen_detect() -> Model:
     """Transfer learning model.
 
     This model utilizes transfer learning to accelerate its progress.
@@ -212,7 +210,7 @@ def gen_detect():
     return model
 
 
-def gen_angle():
+def gen_angle() -> Model:
     """Transfer learning model.
 
     This model utilizes transfer learning to accelerate its progress.
@@ -607,7 +605,6 @@ def train_base_model():
 
 
 def main():
-
     # train base model
     train_base_model()
 

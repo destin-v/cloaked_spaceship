@@ -1,4 +1,15 @@
-.DS_Store
-save/*
-base/*
+# Files to ignore
 *.pyc
+.coverage
+.DS_Store
+profile.html
+profile.json
+poetry.lock
+
+# Folders to ignore
+__pycache__
+.mypy_cache
+.nox
+.pytest_cache
+html
+save
