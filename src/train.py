@@ -18,13 +18,13 @@ from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import MaxPool2D
 from tensorflow.keras.layers import Reshape
 from tensorflow.keras.models import load_model
-from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model
+from tensorflow.keras.models import Sequential
 
 from src.helpers import make_data
 
 
-def replace_inputs(inputs, model):
+def replace_inputs(inputs: tf.Tensor, model: Model) -> tf.Tensor:
     unique_name = names.get_first_name()
 
     for ii in range(0, len(model.layers), 1):
@@ -240,7 +240,7 @@ def gen_angle() -> Model:
     return model
 
 
-def add_angle_labels(batch_size: int, labels: np.array) -> np.array:
+def add_angle_labels(batch_size: int, labels: np.ndarray) -> np.ndarray:
     """Add angle information to labels.
 
     This process adds the angle information to the labels array using
@@ -250,7 +250,7 @@ def add_angle_labels(batch_size: int, labels: np.array) -> np.array:
     ----------
     batch_size : int
         batch shape
-    labels : np.array
+    labels : np.ndarray
         original labels vector
 
     Returns
@@ -288,7 +288,7 @@ def add_angle_labels(batch_size: int, labels: np.array) -> np.array:
     return new_labels
 
 
-def add_detection_labels(batch_size: int, labels: np.array) -> np.array:
+def add_detection_labels(batch_size: int, labels: np.ndarray) -> np.ndarray:
     """Add detection information to labels.
 
     This process adds the angle information to the labels array using
@@ -298,7 +298,7 @@ def add_detection_labels(batch_size: int, labels: np.array) -> np.array:
     ----------
     batch_size : int
         batch shape
-    labels : np.array
+    labels : np.ndarray
         original labels vector
 
     Returns
@@ -328,10 +328,10 @@ def add_detection_labels(batch_size: int, labels: np.array) -> np.array:
 def normalization(
     min_x: int,
     max_x: int,
-    inputs: np.array,
+    inputs: np.ndarray,
     tgt_min: float = -1.0,
     tgt_max: float = 1.0,
-) -> np.array:
+) -> np.ndarray:
     """Normalizes between the numbers to be between two values.
 
     Parameters
@@ -340,7 +340,7 @@ def normalization(
         minimum value expected in the input array
     max_val : int
         maximum value expected in the output array
-    input : np.array
+    input : np.ndarray
         the input array
 
     Returns

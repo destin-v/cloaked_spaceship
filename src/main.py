@@ -8,14 +8,14 @@ from src.helpers import score_iou
 from src.train import normalization
 
 
-def post_processing(predictions: np.array) -> np.array:
+def post_processing(predictions: np.ndarray) -> np.ndarray:
     """Post processor
 
     Performs conversions from the model to values expected by the evaluation algorithm.
 
     Parameters
     ----------
-    predictions : np.array
+    predictions : np.ndarray
         the predictions made from the model
 
     Returns

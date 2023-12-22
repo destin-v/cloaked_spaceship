@@ -1,5 +1,6 @@
 from typing import Optional
 from typing import Tuple
+from typing import Union
 
 import numpy as np
 from shapely.geometry import Polygon
@@ -13,10 +14,7 @@ def _rotation(pts: np.ndarray, theta: float) -> np.ndarray:
     return pts
 
 
-def _make_box_pts(
-    pos_x: float, pos_y: float, yaw: float, dim_x: float, dim_y: float
-) -> np.ndarray:
-
+def _make_box_pts(pos_x: float, pos_y: float, yaw: float, dim_x: float, dim_y: float) -> np.ndarray:
     hx = dim_x / 2
     hy = dim_y / 2
 
@@ -29,7 +27,6 @@ def _make_box_pts(
 def _make_spaceship(
     pos: np.asarray, yaw: float, scale: float, l2w: float, t2l: float
 ) -> Tuple[np.ndarray, np.ndarray]:
-
     dim_x = scale
     dim_y = scale * l2w
 
@@ -73,7 +70,7 @@ def _get_t2l() -> float:
 
 
 def make_data(
-    has_spaceship: bool = None,
+    has_spaceship: Union[bool, None] = None,
     noise_level: float = 0.8,
     no_lines: int = 6,
     image_size: int = 200,
@@ -100,7 +97,6 @@ def make_data(
 
     # draw ship
     if has_spaceship:
-
         params = (_get_pos(image_size), _get_yaw(), _get_size(), _get_l2w(), _get_t2l())
         pts, label = _make_spaceship(*params)
 
@@ -125,7 +121,6 @@ def make_data(
 
 
 def analyze(ypred: np.ndarray, ytrue: np.ndarray) -> Optional[str]:
-
     assert (
         ypred.size == ytrue.size == 5
     ), "Inputs should have 5 parameters, use null array for empty predictions/labels."
@@ -160,7 +155,6 @@ def analyze(ypred: np.ndarray, ytrue: np.ndarray) -> Optional[str]:
 
 
 def score_iou(ypred: np.ndarray, ytrue: np.ndarray) -> Optional[float]:
-
     assert (
         ypred.size == ytrue.size == 5
     ), "Inputs should have 5 parameters, use null array for empty predictions/labels."
