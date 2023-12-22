@@ -145,3 +145,10 @@ Condensed Metrics
 |Trainable params       | 257,283   |
 |Non-trainable params   | 1,330     |
 |Final Score            | **~63%**  |
+
+
+# 🧭 Website
+
+```console
+nox -r -s autodoc
+```
