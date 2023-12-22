@@ -22,9 +22,19 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.models import Sequential
 
 from src.helpers import make_data
+from typing import Tuple
 
 
 def replace_inputs(inputs: tf.Tensor, model: Model) -> tf.Tensor:
+    """Replace the inputs of a model with a new set of input tensors.
+
+    Args:
+        inputs (tf.Tensor): Input tensor.
+        model (Model): Model to use.
+
+    Returns:
+        tf.Tensor: _description_
+    """
     unique_name = names.get_first_name()
 
     for ii in range(0, len(model.layers), 1):
@@ -40,7 +50,11 @@ def replace_inputs(inputs: tf.Tensor, model: Model) -> tf.Tensor:
 
 
 def combine_models() -> Model:
-    """Generate a combined model."""
+    """Combine multiple models into a hydra configuration where there are multiple heads outputing different predictions.
+
+    Returns:
+        Model: The hydra model.
+    """
 
     IMAGE_SIZE = 200
 
@@ -76,14 +90,10 @@ def combine_models() -> Model:
 
 
 def gen_base_model() -> Model:
-    """Standard network model.
+    """The base model.
 
-    This model will work well for the problem of image detection and estimation.
-
-    Returns
-    -------
-    keras.model
-        A keras model object
+    Returns:
+        Model: Base model.
     """
 
     IMAGE_SIZE = 200
@@ -124,14 +134,10 @@ def gen_base_model() -> Model:
 
 
 def gen_position() -> Model:
-    """Transfer learning model.
+    """Model for predicting position.  Dervied from base model.
 
-    This model utilizes transfer learning to accelerate its progress.
-
-    Returns
-    -------
-    keras.model
-        Keras model object
+    Returns:
+        Model: Position model.
     """
 
     # retrieve saved model
@@ -155,14 +161,10 @@ def gen_position() -> Model:
 
 
 def gen_area() -> Model:
-    """Transfer learning model.
+    """Model for predicting area.  Dervied from base model.
 
-    This model utilizes transfer learning to accelerate its progress.
-
-    Returns
-    -------
-    keras.model
-        Keras model object
+    Returns:
+        Model: Area model.
     """
 
     # retrieve saved model
@@ -183,14 +185,10 @@ def gen_area() -> Model:
 
 
 def gen_detect() -> Model:
-    """Transfer learning model.
+    """Model for predicting existance of a spaceship.  Dervied from base model.
 
-    This model utilizes transfer learning to accelerate its progress.
-
-    Returns
-    -------
-    keras.model
-        Keras model object
+    Returns:
+        Model: Detection model.
     """
 
     # retrieve saved model
@@ -211,14 +209,10 @@ def gen_detect() -> Model:
 
 
 def gen_angle() -> Model:
-    """Transfer learning model.
+    """Model for predicting angles.  Dervied from base model.
 
-    This model utilizes transfer learning to accelerate its progress.
-
-    Returns
-    -------
-    keras.model
-        Keras model object
+    Returns:
+        Model: Angle model.
     """
 
     # retrieve saved model
@@ -241,22 +235,17 @@ def gen_angle() -> Model:
 
 
 def add_angle_labels(batch_size: int, labels: np.ndarray) -> np.ndarray:
-    """Add angle information to labels.
+    """This process adds the angle information to the labels array using sin and cos instead of the radian values 0->2*PI.
 
-    This process adds the angle information to the labels array using
-    sin and cos instead of the radian values 0->2*PI.
+    Args:
+        batch_size (int): Batch shape.
+        labels (np.ndarray): Original labels vector.
 
-    Parameters
-    ----------
-    batch_size : int
-        batch shape
-    labels : np.ndarray
-        original labels vector
+    Raises:
+        ValueError: Invalid angles detected.
 
-    Returns
-    -------
-    np.array
-        modified labels data
+    Returns:
+        np.ndarray: Modified labels with sin and cos.
     """
 
     YAW_COLUMN = 2
@@ -289,22 +278,14 @@ def add_angle_labels(batch_size: int, labels: np.ndarray) -> np.ndarray:
 
 
 def add_detection_labels(batch_size: int, labels: np.ndarray) -> np.ndarray:
-    """Add detection information to labels.
+    """This process converts the NaN labels into values that are trainable by the network.
 
-    This process adds the angle information to the labels array using
-    sin and cos instead of the radian values 0->2*PI.
+    Args:
+        batch_size (int): Batch shape.
+        labels (np.ndarray): Original labels vector.
 
-    Parameters
-    ----------
-    batch_size : int
-        batch shape
-    labels : np.ndarray
-        original labels vector
-
-    Returns
-    -------
-    np.array
-        modified labels data
+    Returns:
+        np.ndarray: Valid predictions and labels without NaNs.
     """
 
     # array to check
@@ -334,19 +315,15 @@ def normalization(
 ) -> np.ndarray:
     """Normalizes between the numbers to be between two values.
 
-    Parameters
-    ----------
-    min_val : int
-        minimum value expected in the input array
-    max_val : int
-        maximum value expected in the output array
-    input : np.ndarray
-        the input array
+    Args:
+        min_x (int): Minimum value expected in the input array.
+        max_x (int): Maximum value expected in the input array.
+        inputs (np.ndarray): the input array
+        tgt_min (float, optional): Minimum value. Defaults to -1.0.
+        tgt_max (float, optional): Maximum value. Defaults to 1.0.
 
-    Returns
-    -------
-    np.array
-        the normalized array
+    Returns:
+        np.ndarray: Normalized array.
     """
 
     val = (tgt_max - tgt_min) * (inputs - min_x) / (max_x - min_x) + tgt_min
@@ -359,27 +336,22 @@ def make_batch(
     has_spaceship: bool = True,
     noise_level: float = 0.8,
     variables: list = ["x", "y", "yaw", "width", "height", "sin", "cos"],
-) -> tuple:
-    """Generates the training data.
+) -> Tuple[np.ndarray, np.ndarray]:
+    """The training data is produce by this fuction.
 
-    The training data is produce by this fuction.
+    Args:
+        batch_size (int, optional): Batch shape. Defaults to 64.
+        has_spaceship (bool, optional): Flag to indicate if spaceship exists. Defaults to True.
+        noise_level (float, optional): Noise level in image. Defaults to 0.8.
+        variables (list, optional): Variables of interest. Defaults to ["x", "y", "yaw", "width", "height", "sin", "cos"].
 
-    Parameters
-    ----------
-    batch_size : int
-        the shape of the batch
-    vars : str
-        list of string variables to return
+    Raises:
+        ValueError: Check for invalid ranges in input image.
+        ValueError: Check for invalid ranges in filtered labels.
+        ValueError: Check for invalid ranges in filtered labels.
 
-    Returns
-    -------
-    tuple
-        image and label pairing
-
-    Raises
-    ------
-    ValueError
-        Check shape of the labels
+    Returns:
+        tuple: The image array and the filtered array.
     """
 
     # This data generation process has been modified to work with spaceship or no spaceship
@@ -447,13 +419,13 @@ def make_batch(
     return imgs, filter_labels
 
 
-# Custom Callbacks
 class CustomSaverPred(keras.callbacks.Callback):
+    """Custom Keras callback for saving data."""
+
     def on_epoch_end(self, epoch, logs={}):
         self.model.save("save/model{}.hd5".format(epoch))
 
 
-# Trainer model
 def train_model(
     batch_size: int = 64,
     model_path: str = "save/",
@@ -466,6 +438,20 @@ def train_model(
     has_spaceship: bool = True,
     base_model: Callable = gen_base_model,
 ):
+    """Performing training on model.
+
+    Args:
+        batch_size (int, optional): Batch shape. Defaults to 64.
+        model_path (str, optional): Path to model. Defaults to "save/".
+        model_name (str, optional): Name of model. Defaults to "saved_model.pb".
+        steps_per_epoch (int, optional): Number of training steps per epoch. Defaults to 250.
+        epochs (int, optional): Number of epochs to train. Defaults to 50.
+        loss (object, optional): Loss function. Defaults to keras.losses.MeanSquaredError().
+        optimizer (object, optional): Optimizer to use. Defaults to keras.optimizers.Adam().
+        variables (list, optional): Variables of interest. Defaults to ["x", "y", "yaw", "width", "height", "sin", "cos", "detection"].
+        has_spaceship (bool, optional): Flag to indicate spaceship exists. Defaults to True.
+        base_model (Callable, optional): The base model to use. Defaults to gen_base_model.
+    """
     # define callbacks
     saver = CustomSaverPred()
     checkpoint = tf.keras.callbacks.ModelCheckpoint(
@@ -504,6 +490,7 @@ def train_model(
 
 
 def train_detection_model():
+    """Train a detection model.  This model is only concerned with determining whether a spaceship exists in the noise."""
     BATCH_SIZE = 128
     MODEL_PATH = "save/best_model_detection"
 
@@ -525,6 +512,7 @@ def train_detection_model():
 
 
 def train_area_model():
+    """Train an area model.  This model is only concerned with predicting the $width$ and $height$ of the spaceship."""
     BATCH_SIZE = 64
     MODEL_PATH = "save/best_model_area"
 
@@ -545,6 +533,7 @@ def train_area_model():
 
 
 def train_position_model():
+    """Train a position model.  This model is only concerned with predicting the $x$ and $y$ position of the spaceship."""
     BATCH_SIZE = 128
     MODEL_PATH = "save/best_model_position"
 
@@ -565,6 +554,7 @@ def train_position_model():
 
 
 def train_angle_model():
+    """Train an angle model.  This model is only concerned with predicting the angle of the spaceship."""
     BATCH_SIZE = 128
     MODEL_PATH = "save/best_model_angle"
 
@@ -585,6 +575,7 @@ def train_angle_model():
 
 
 def train_base_model():
+    """Train a base model.  This model is the foundation model which the other models will use for fine-turning their predictions.  The base model is trained with more variables than the other derived models because it should be useful for all of the variables of interest."""
     BATCH_SIZE = 64
     MODEL_PATH = "save/base_model"
 
@@ -605,6 +596,7 @@ def train_base_model():
 
 
 def main():
+    """Main function for training all models."""
     # train base model
     train_base_model()
 

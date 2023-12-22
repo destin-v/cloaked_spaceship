@@ -9,19 +9,13 @@ from src.train import normalization
 
 
 def post_processing(predictions: np.ndarray) -> np.ndarray:
-    """Post processor
+    """Performs conversions from the model to values expected by the evaluation algorithm.
 
-    Performs conversions from the model to values expected by the evaluation algorithm.
+    Args:
+        predictions (np.ndarray): Predictions from model.
 
-    Parameters
-    ----------
-    predictions : np.ndarray
-        the predictions made from the model
-
-    Returns
-    -------
-    np.array
-        the predictions after post-processing
+    Returns:
+        np.ndarray: Predictions after post-processing.
     """
 
     names = ["x", "y", "width", "height", "sin", "cos", "detection"]

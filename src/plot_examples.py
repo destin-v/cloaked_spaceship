@@ -9,7 +9,15 @@ from src.helpers import make_data
 fig, ax = plt.subplots(1, 3, figsize=(12, 4))
 
 
-def plot(ax, img, label, title):
+def plot(ax: plt.Axes, img: np.ndarray, label: np.ndarray, title: str):
+    """Create plot examples for visualizing data.
+
+    Args:
+        ax (plt.Axes): Axes to plot.
+        img (np.ndarray): Numpy image array.
+        label (np.ndarray): Location and angle of the spaceship.
+        title (str): Title string indicator.
+    """
     ax.imshow(img, cmap="gray")
     ax.set_title(title)
 
@@ -31,4 +39,5 @@ plot(ax[1], img, label, "example (without spaceship)")
 img, label = make_data(has_spaceship=True, no_lines=0, noise_level=0)
 plot(ax[2], img, label, "example (without noise)")
 
-fig.savefig("example.png")
+# Generate an example image
+# fig.savefig("example.png")

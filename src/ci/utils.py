@@ -50,7 +50,7 @@ def autodoc(browser: Union[str, None] = None, local_path: str = "save/pdocs"):
         [
             "pdoc",
             "-d",
-            "numpy",
+            "google",
             "--logo",
             "https://github.com/destin-v/cloaked_spaceship/blob/main/docs/pics/program_logo.png?raw=true",
             "--logo-link",
