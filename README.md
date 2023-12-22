@@ -136,7 +136,6 @@ dense (Dense)               | (None, 25)                    | 1625
 batch_normalization_16      | (Batc (None, 25)              | 100
 activation_16 (Activation)  |(None, 25)                     | 0
 dense_1 (Dense)             | (None, 4)                     | 104
----
 
 Condensed Metrics
 ---
