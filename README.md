@@ -1,9 +1,7 @@
-
 <figure>
     <p align="center">
-    <img src="docs/pics/logo.gif" alt="drawing" width="600"/>
+    <img src="https://drive.google.com/uc?export=view&id=1yFte-RASCcF1ahkYg1Jybavi-gWje8kp" alt="drawing" width="600"/>
     </p>
-  <figcaption align = "center"></figcaption>
 </figure>
 
 # 📒 Description
@@ -11,7 +9,6 @@
     <p align="center">
     <img src="docs/pics/program_logo.png" alt="drawing" width="350"/>
     </p>
-  <figcaption align = "center"></figcaption>
 </figure>
 
 This was an interesting computer vision problem I completed back in 2021.  It requires building an AI solution to pick out an object from a noisy environment.  I created a novel implementation that was able to train on limited GPU resources.  This code is designed to showcase how to train small models for a difficult problem.  The small models can be stitched together in a ***hydra*** configuration to provide accurate inferences on many different tasks.
@@ -28,7 +25,15 @@ Python==3.8 is needed in order to install the packages stated in the requirement
 
 ## Problem
 
-<img title="spaceship problem" alt="Alt text" src="docs/pics/example.png">
+<figure>
+    <p align="center">
+    <img title="spaceship problem" alt="Alt text" src="docs/pics/example.png">
+    </p>
+</figure>
+
+<p align="center">
+<b>Fig 1: The spaceship is cloaked inside a noisey environment.</b>
+</p>
 
 The goal is to detect spaceships which have been fitted with a cloaking device that makes them less visible. You are expected to use a deep learning model to complete this task. The model will take a single channel image as input and detects the spaceship (if it exists). Not all image will contain a spaceship, but they will contain no more than 1. For any spaceship, the model should predict their bounding box and heading. This can be described using five parameters:
 
