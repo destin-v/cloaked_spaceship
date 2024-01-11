@@ -1,15 +1,25 @@
-<figure>
-    <p align="center">
-    <img src="https://drive.google.com/uc?export=view&id=1yFte-RASCcF1ahkYg1Jybavi-gWje8kp" alt="drawing" width="600"/>
-    </p>
-</figure>
+<p align="center">
+  <a href="https://github.com/destin-v">
+    <img src="https://drive.google.com/uc?export=view&id=1yFte-RASCcF1ahkYg1Jybavi-gWje8kp" alt="drawing" width="500"/>
+  </a>
+</p>
 
 # 📒 Description
-<figure>
-    <p align="center">
-    <img src="docs/pics/program_logo.png" alt="drawing" width="350"/>
-    </p>
-</figure>
+<p align="center">
+  <img src="docs/pics/program_logo.png" alt="drawing" width="300"/>
+</p>
+
+<p align="center">
+  <a href="https://devguide.python.org/versions/">              <img alt="" src="https://img.shields.io/badge/python-3.8-blue?logo=python&logoColor=white"></a>
+  <a href="https://docs.github.com/en/actions/quickstart">      <img alt="" src="https://img.shields.io/badge/CI-github-blue?logo=github&logoColor=white"></a>
+  <a href="https://black.readthedocs.io/en/stable/index.html">  <img alt="" src="https://img.shields.io/badge/code%20style-black-blue"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pre-commit.yml">  <img alt="pre-commit" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pre-commit.yml/badge.svg"></a>
+  <a href="https://destin-v.github.io/cloaked_spaceship/src.html">                           <img alt="pdoc" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pdoc.yml/badge.svg"></a>
+  <a href="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pytest.yml">      <img alt="pytest" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pytest.yml/badge.svg"></a>
+</p>
 
 This was an interesting computer vision problem I completed back in 2021.  It requires building an AI solution to pick out an object from a noisy environment.  I created a novel implementation that was able to train on limited GPU resources.  This code is designed to showcase how to train small models for a difficult problem.  The small models can be stitched together in a ***hydra*** configuration to provide accurate inferences on many different tasks.
 
@@ -85,71 +95,71 @@ Each of these models were around 260,000 total parameters.  So even though four 
 
 Base Model Architecture:
 ---
-Layer (type)                | Output Shape                  | Param #
----|---|---
-reshape (Reshape)           | (None, 200, 200, 1)           | 0
-conv2d (Conv2D)             | (None, 200, 200, 16)          | 160
-batch_normalization         | (BatchNo (None, 200, 200, 16) | 64
-activation (Activation)     | (None, 200, 200, 16)          | 0
-conv2d_1 (Conv2D)           | (None, 100, 100, 16)          | 2320
-batch_normalization_1       | (Batch (None, 100, 100, 16)   | 64
-activation_1 (Activation)   | (None, 100, 100, 16)          | 0
-conv2d_2 (Conv2D)           | (None, 100, 100, 16)          | 2320
-batch_normalization_2       | (Batch (None, 100, 100, 16)   | 64
-activation_2 (Activation)   | (None, 100, 100, 16)          | 0
-conv2d_3 (Conv2D)           | (None, 50, 50, 16)            | 2320
-batch_normalization_3       | (Batch (None, 50, 50, 16)     | 64
-activation_3 (Activation)   | (None, 50, 50, 16)            | 0
-conv2d_4 (Conv2D)           | (None, 50, 50, 32)            | 4640
-batch_normalization_4       | (Batch (None, 50, 50, 32)     | 128
-activation_4 (Activation)   | (None, 50, 50, 32)            | 0
-conv2d_5 (Conv2D)           | (None, 25, 25, 32)            | 9248
-batch_normalization_5       | (Batch (None, 25, 25, 32)     | 128
-activation_5 (Activation)   | (None, 25, 25, 32)            | 0
-conv2d_6 (Conv2D)           | (None, 25, 25, 32)            | 9248
-batch_normalization_6       | (Batch (None, 25, 25, 32)     | 128
-activation_6 (Activation)   | (None, 25, 25, 32)            | 0
-conv2d_7 (Conv2D)           | (None, 13, 13, 32)            | 9248
-batch_normalization_7       | (Batch (None, 13, 13, 32)     | 128
-activation_7 (Activation)   | (None, 13, 13, 32)            | 0
-conv2d_8 (Conv2D)           | (None, 13, 13, 48)            | 13872
-batch_normalization_8       | (Batch (None, 13, 13, 48)     | 192
-activation_8 (Activation)   | (None, 13, 13, 48)            | 0
-conv2d_9 (Conv2D)           | (None, 7, 7, 48)              | 20784
-batch_normalization_9       | (Batch (None, 7, 7, 48)       | 192
-activation_9 (Activation)   | (None, 7, 7, 48)              | 0
-conv2d_10 (Conv2D)          | (None, 7, 7, 48)              | 20784
-batch_normalization_10      | (Batc (None, 7, 7, 48)        | 192
-activation_10 (Activation)  | (None, 7, 7, 48)              | 0
-conv2d_11 (Conv2D)          | (None, 4, 4, 48)              | 20784
-batch_normalization_11      | (Batc (None, 4, 4, 48)        | 192
-activation_11 (Activation)  | (None, 4, 4, 48)              | 0
-conv2d_12 (Conv2D)          | (None, 4, 4, 64)              | 27712
-batch_normalization_12      | (Batc (None, 4, 4, 64)        | 256
-activation_12 (Activation)  | (None, 4, 4, 64)              | 0
-conv2d_13 (Conv2D)          | (None, 2, 2, 64)              | 36928
-batch_normalization_13      | (Batc (None, 2, 2, 64)        | 256
-activation_13 (Activation)  | (None, 2, 2, 64)              | 0
-conv2d_14 (Conv2D)          | (None, 2, 2, 64)              | 36928
-batch_normalization_14      | (Batc (None, 2, 2, 64)        | 256
-activation_14 (Activation)  | (None, 2, 2, 64)              | 0
-conv2d_15 (Conv2D)          | (None, 1, 1, 64)              | 36928
-batch_normalization_15      | (Batc (None, 1, 1, 64)        | 256
-activation_15 (Activation)  | (None, 1, 1, 64)              | 0
-flatten (Flatten)           | (None, 64)                    | 0
-dense (Dense)               | (None, 25)                    | 1625
-batch_normalization_16      | (Batc (None, 25)              | 100
-activation_16 (Activation)  |(None, 25)                     | 0
-dense_1 (Dense)             | (None, 4)                     | 104
+| Layer (type)               | Output Shape                  | Param # |
+| -------------------------- | ----------------------------- | ------- |
+| reshape (Reshape)          | (None, 200, 200, 1)           | 0       |
+| conv2d (Conv2D)            | (None, 200, 200, 16)          | 160     |
+| batch_normalization        | (BatchNo (None, 200, 200, 16) | 64      |
+| activation (Activation)    | (None, 200, 200, 16)          | 0       |
+| conv2d_1 (Conv2D)          | (None, 100, 100, 16)          | 2320    |
+| batch_normalization_1      | (Batch (None, 100, 100, 16)   | 64      |
+| activation_1 (Activation)  | (None, 100, 100, 16)          | 0       |
+| conv2d_2 (Conv2D)          | (None, 100, 100, 16)          | 2320    |
+| batch_normalization_2      | (Batch (None, 100, 100, 16)   | 64      |
+| activation_2 (Activation)  | (None, 100, 100, 16)          | 0       |
+| conv2d_3 (Conv2D)          | (None, 50, 50, 16)            | 2320    |
+| batch_normalization_3      | (Batch (None, 50, 50, 16)     | 64      |
+| activation_3 (Activation)  | (None, 50, 50, 16)            | 0       |
+| conv2d_4 (Conv2D)          | (None, 50, 50, 32)            | 4640    |
+| batch_normalization_4      | (Batch (None, 50, 50, 32)     | 128     |
+| activation_4 (Activation)  | (None, 50, 50, 32)            | 0       |
+| conv2d_5 (Conv2D)          | (None, 25, 25, 32)            | 9248    |
+| batch_normalization_5      | (Batch (None, 25, 25, 32)     | 128     |
+| activation_5 (Activation)  | (None, 25, 25, 32)            | 0       |
+| conv2d_6 (Conv2D)          | (None, 25, 25, 32)            | 9248    |
+| batch_normalization_6      | (Batch (None, 25, 25, 32)     | 128     |
+| activation_6 (Activation)  | (None, 25, 25, 32)            | 0       |
+| conv2d_7 (Conv2D)          | (None, 13, 13, 32)            | 9248    |
+| batch_normalization_7      | (Batch (None, 13, 13, 32)     | 128     |
+| activation_7 (Activation)  | (None, 13, 13, 32)            | 0       |
+| conv2d_8 (Conv2D)          | (None, 13, 13, 48)            | 13872   |
+| batch_normalization_8      | (Batch (None, 13, 13, 48)     | 192     |
+| activation_8 (Activation)  | (None, 13, 13, 48)            | 0       |
+| conv2d_9 (Conv2D)          | (None, 7, 7, 48)              | 20784   |
+| batch_normalization_9      | (Batch (None, 7, 7, 48)       | 192     |
+| activation_9 (Activation)  | (None, 7, 7, 48)              | 0       |
+| conv2d_10 (Conv2D)         | (None, 7, 7, 48)              | 20784   |
+| batch_normalization_10     | (Batc (None, 7, 7, 48)        | 192     |
+| activation_10 (Activation) | (None, 7, 7, 48)              | 0       |
+| conv2d_11 (Conv2D)         | (None, 4, 4, 48)              | 20784   |
+| batch_normalization_11     | (Batc (None, 4, 4, 48)        | 192     |
+| activation_11 (Activation) | (None, 4, 4, 48)              | 0       |
+| conv2d_12 (Conv2D)         | (None, 4, 4, 64)              | 27712   |
+| batch_normalization_12     | (Batc (None, 4, 4, 64)        | 256     |
+| activation_12 (Activation) | (None, 4, 4, 64)              | 0       |
+| conv2d_13 (Conv2D)         | (None, 2, 2, 64)              | 36928   |
+| batch_normalization_13     | (Batc (None, 2, 2, 64)        | 256     |
+| activation_13 (Activation) | (None, 2, 2, 64)              | 0       |
+| conv2d_14 (Conv2D)         | (None, 2, 2, 64)              | 36928   |
+| batch_normalization_14     | (Batc (None, 2, 2, 64)        | 256     |
+| activation_14 (Activation) | (None, 2, 2, 64)              | 0       |
+| conv2d_15 (Conv2D)         | (None, 1, 1, 64)              | 36928   |
+| batch_normalization_15     | (Batc (None, 1, 1, 64)        | 256     |
+| activation_15 (Activation) | (None, 1, 1, 64)              | 0       |
+| flatten (Flatten)          | (None, 64)                    | 0       |
+| dense (Dense)              | (None, 25)                    | 1625    |
+| batch_normalization_16     | (Batc (None, 25)              | 100     |
+| activation_16 (Activation) | (None, 25)                    | 0       |
+| dense_1 (Dense)            | (None, 4)                     | 104     |
 
 Condensed Metrics
 ---
-|Parameters| Value|
-|---|---|
-|Total params           | 258,613   |
-|Trainable params       | 257,283   |
-|Non-trainable params   | 1,330     |
-|Final Score            | **~63%**  |
+| Parameters           | Value    |
+| -------------------- | -------- |
+| Total params         | 258,613  |
+| Trainable params     | 257,283  |
+| Non-trainable params | 1,330    |
+| Final Score          | **~63%** |
 
 
 # 🧭 Website
