@@ -3,11 +3,12 @@ Includes common utility functions when running Continuous Integration (CI).
 """
 import os
 import webbrowser
+from typing import Union
 
 
 def view_html(
     index_path: str,
-    browser: str | None = None,
+    browser: Union[str, None] = None,
 ):
     """View an HTML file using the browser provided by the user.
 

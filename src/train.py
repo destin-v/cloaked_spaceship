@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from copy import deepcopy
 from os.path import exists
+from typing import Tuple
 
 import names
 import numpy as np
@@ -22,7 +23,6 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.models import Sequential
 
 from src.helpers import make_data
-from typing import Tuple
 
 
 def replace_inputs(inputs: tf.Tensor, model: Model) -> tf.Tensor:
