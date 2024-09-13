@@ -9,13 +9,12 @@ nox -r -s pytest           # Run pytests
 nox -r -s pytest_cov       # Run pytests with coverage report
 nox -r -s coverage         # Run coverage (stand-alone)
 nox -r -s scalene          # Profile the code
-nox -r -s pdoc             # Generate documentation
-nox -r -s show_pdoc        # View HTML of pdoc
 
 nox                        # Run all sessions
 ```
 
 """
+
 from dataclasses import dataclass
 
 import nox
@@ -27,7 +26,6 @@ from src.ci.utils import view_html
 class config:
     pytest_cov_path: str = "save/pytest-cov"
     coverage_path: str = "save/coverage"
-    pdoc_path: str = "save/pdocs"
 
 
 @nox.session
@@ -62,43 +60,3 @@ def scalene(session: nox.Session):
 
     session.run("poetry", "install", "--with=dev", "--no-root")
     session.run("scalene", "-m", "pytest")
-
-
-@nox.session
-def pdoc(session: nox.Session):
-    """Generate pdocs."""
-
-    session.run("poetry", "install", "--with=dev", "--no-root")
-    session.run("mkdir", "-p", f"{config.pdoc_path}/docs")
-    session.run("cp", "-rf", "docs/pics", f"{config.pdoc_path}/docs/")
-    session.run(
-        "pdoc",
-        "-d",
-        "google",
-        "--logo",
-        "https://github.com/destin-v/cloaked_spaceship/blob/main/docs/pics/program_logo.png?raw=true",
-        "--logo-link",
-        "https://github.com/destin-v/cloaked_spaceship",
-        "--math",
-        "--footer-text",
-        "Author: W. Li",
-        "--output-directory",
-        config.pdoc_path,
-        "src",
-    )
-
-
-@nox.session
-def show_pytest_cov(session: nox.Session):
-    """Show pytest coverage in HTML."""
-
-    pytest_cov(session)
-    view_html(config.pdoc_path)
-
-
-@nox.session
-def show_pdoc(session: nox.Session):
-    """Show pdoc in HTML."""
-
-    pdoc(session)
-    view_html(config.pdoc_path)

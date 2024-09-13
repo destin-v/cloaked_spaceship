@@ -17,7 +17,6 @@
 
 <p align="center">
   <a href="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pre-commit.yml">  <img alt="pre-commit" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pre-commit.yml/badge.svg"></a>
-  <a href="https://destin-v.github.io/cloaked_spaceship/src.html">                           <img alt="pdoc" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pdoc.yml/badge.svg"></a>
   <a href="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pytest.yml">      <img alt="pytest" src="https://github.com/destin-v/cloaked_spaceship/actions/workflows/pytest.yml/badge.svg"></a>
 </p>
 
